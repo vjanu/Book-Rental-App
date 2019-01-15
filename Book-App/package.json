@@ -1,0 +1,23 @@
+{
+  "name": "internship-process-group2",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chai": "^4.1.2",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "mocha": "^5.2.0",
+    "mongoose": "^5.2.12",
+    "morgan": "~1.9.0",
+    "nock": "^9.6.1",
+    "randomatic": "^3.1.0",
+    "request": "^2.88.0"
+  }
+}
