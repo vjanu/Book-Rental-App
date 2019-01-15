@@ -1,2 +1,2 @@
-# internship-process-group02
-Fully Automated
+# Book Rental Application using HTML, CSS, Bootstrap, jQuery, Node.js and MongoDB
+
