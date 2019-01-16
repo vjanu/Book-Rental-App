@@ -18,6 +18,8 @@
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"> -->
+
 
     <title>Home</title>
 </head>
@@ -26,7 +28,7 @@
 
     <!-- navbar: start -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="#">Dashboard</a>
+        <a class="navbar-brand" href="user_dashboard.html">Dashboard</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,7 +36,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="All the Books">
-                    <a class="nav-link nav-link-collapse" href="manage-sites.html">
+                    <a class="nav-link nav-link-collapse" href="all_books.html">
                         <i class="far fa-fw fa-building"></i>
                         <span class="nav-link-text">View all the books</span>
                     </a>
@@ -64,94 +66,29 @@
     <!-- navbar: end -->
 
     <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="user_dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">View All the Books</li>
+                </ol>
 
 
-        <div class="container">
-
-            <div class="row mt-5">
-                <div class="col-md-3">
-                    <div class="card-counter primary">
-                        <i class="fas fa-code-branch"></i>
-                        <span class="count-numbers">12</span>
-                        <span class="count-name">Flowz</span>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">Available Books For Renting</h4>
                     </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card-counter danger">
-                        <i class="far fa-paper-plane"></i>
-                        <span class="count-numbers">599</span>
-                        <span class="count-name">Instances</span>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card-counter success">
-                        <i class="fa fa-database"></i>
-                        <span class="count-numbers">6875</span>
-                        <span class="count-name">Data</span>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card-counter info">
-                        <i class="fa fa-users"></i>
-                        <span class="count-numbers">35</span>
-                        <span class="count-name">Users</span>
+                    <div class="card-body" id="view-available-books">
+                        
+                        
                     </div>
                 </div>
             </div>
-
-
-
-            <div class="row mt-5">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
         </div>
-
-
-
-
-
-
 
         <footer class="sticky-footer">
             <div class="container">
@@ -193,6 +130,10 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/index.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+ 
 </body>
 
 </html>
