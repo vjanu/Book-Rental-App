@@ -2,6 +2,7 @@
 let baseUrlLocal = 'http://localhost:3000';
 let USER_INFO = 'user_info';
 let CURRENT_URL = window.location.href;
+let pricePerDay;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
@@ -24,6 +25,69 @@ $('#btn-logout').on('click', function (e) {
 	window.location.href = "index.html";
 });
 
+function initiateDatePickers(){
+ $( function() {
+    $('#datepicker1').datepicker({ dateFormat: 'yy-mm-dd' ,
+     minDate: 0,
+     onSelect: function(date){
+
+        var selectedDate = new Date(date);
+        var msecsInADay = 86400000;
+        var endDate = new Date(selectedDate.getTime() + msecsInADay);
+
+       //Set Minimum Date of EndDatePicker After Selected Date of StartDatePicker
+        $("#datepicker2").datepicker( "option", "minDate", endDate );
+      
+    }
+
+  }).val();
+ } );
+
+    $( function() {
+        
+        $('#datepicker2').datepicker({ dateFormat: 'yy-mm-dd' ,
+    
+        onSelect: function(date){
+        var from = $('#datepicker1').val();
+        var to = $('#datepicker2').val();
+
+        // end - start returns difference in milliseconds 
+        var diff = new Date(Date.parse(to) - Date.parse(from))
+        console.log(diff);
+        // get days
+        var days = diff/1000/60/60/24;
+        $('#days').val(days);
+        var pricePerDay = $("#price").val();
+        var qty = $("#qty").val();
+        $("#tot").val(days*pricePerDay*qty);
+        }
+    } );
+    });
+}
+
+function returnDatePicker(){
+$( function() {
+    $('#returndate').datepicker({ dateFormat: 'yy-mm-dd' ,
+    minDate: 0,
+    onSelect: function(date){
+        var to = $('#todate').val();
+        var returnD = $('#returndate').val();
+        
+        var diff = new Date(Date.parse(returnD) - Date.parse(to))
+        console.log(diff);
+        // get days
+        var days = diff/1000/60/60/24;
+        $('#additionaldate').val(days);
+        console.log(days)
+        var fee = pricePerDay * 0.5 * days;
+        $('#latefee').val(fee);
+        
+    }
+  }).val();
+});
+}
+
+
 
 if (CURRENT_URL.includes('user_dashboard')) {
     getUser();
@@ -36,6 +100,29 @@ if (CURRENT_URL.includes('available_books')) {
 }
 if (CURRENT_URL.includes('book_details')) {
     getBookDetails();
+    initiateDatePickers();
+}
+
+if (CURRENT_URL.includes('returned_books')) {
+    returnDatePicker();
+
+}
+
+function paypalIntegration() {
+
+    if($("#qty").val().length == 0 || $("#tot").val().length == 0|| $("#days").val().length == 0
+     || $("#price").val().length == 0 || $("#datepicker1").val().length == 0 || $("#datepicker1").val().length == 0 ){
+        $.notify("Payment Cannot Process. Please check the details","error");
+    }
+    else{
+        $.notify("You will be directed to payment page","success");
+        window.open(
+            'https://www.paypal.com',
+            '_blank' // <- This is what makes it open in a new window.
+          );
+       
+    }
+
 }
 
 function checkBorrowerExists() {
@@ -58,8 +145,12 @@ function checkBorrowerExists() {
                     }
                     console.log(user_info)
                     localStorage.setItem(USER_INFO, JSON.stringify(user_info));  
-            
+            if(data.userEmail == "admin@gmail.com"){
+                window.location.href = "returned_books.html";
+            }
+            else{
                 window.location.href = "user_dashboard.html";
+            }
             }else{
                 $.notify("Invalid login credentials","warn");
             }
@@ -113,7 +204,7 @@ function getRegisterDetails() {
 
 
 function getUser() {
-console.log(localStorage.getItem(USER_INFO))
+ console.log(localStorage.getItem(USER_INFO))
     let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     let email = userInfo.userData.Email;
     axios.get(baseUrlLocal+'/register/info/user/'+email)
@@ -222,12 +313,13 @@ function getBookTable(tableId, book) {
         html += '</tbody></table>'; 
     
         return html;
-    }
+}
 
 
 
 
     /***********  View Available Books For Rent ******************/
+
 
 function loadAvailableBooksTable() {
     axios.get(baseUrlLocal + '/book/rent')
@@ -282,7 +374,8 @@ function getAvailableBookTable(tableId, book) {
         return html;
     }
 
-function isRented(request) {
+
+    function isRented(request) {
     var badgeClass = '';
     var badgeText = '';
 
@@ -345,11 +438,12 @@ function getImages() {
               console.log(error.response.headers);
             }
         });
-    }
+}
 
-    // ********** Rent the book************
 
-    function getBookDetails(){
+// ********** Rent the book************
+
+function getBookDetails(){
         let isbn=''
         if (CURRENT_URL.includes('#')) {
              isbn = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
@@ -370,4 +464,87 @@ function getImages() {
             $("#author").val(form_details[0].Author);  
         }
         })
+}
+
+
+
+// ********* Update with Rented Details*****************
+
+function updateUserWithRentedDetails() {
+    console.log("Function called");
+    let isbn=''
+        if (CURRENT_URL.includes('#')) {
+             isbn = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+            console.log(isbn);
+        }
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
+    let email = userInfo.userData.Email;
+   
+    let data = {
+        ISBN: isbn,
+        FromDate: $("#datepicker1").val(),
+        ToDate: $("#datepicker2").val(),
+        ReturnedDate: "0",
+        FeeDate: "0",
+        Fee: 0,
+        Qty: $("#qty").val()
+       
     }
+
+    console.log(data);
+    axios.post(baseUrlLocal+'/register/info/'+email,data, {headers: headers})
+        .then(response => {
+           
+        })
+        .catch(error => {
+            $.notify("Invalid Updation","warn");
+        
+            console.log(error);
+        })
+}
+
+function getBookDetailsForFinalRent(){
+    var isbn =  $("#isbn").val();
+        axios.get(baseUrlLocal+'/register/bookmodel/'+isbn)
+       .then(response => {
+    if (response.data.success) {
+        let form_details = response.data.data;
+        $("#qty").append(form_details[0].Qty);  
+        $("#fromdate").append(form_details[0].FromDate);  
+        $("#todate").val(form_details[0].ToDate);  
+
+    }
+    })
+}
+$(document).ready(function() {   
+
+        $(document).on("change", "#isbn", function() {
+      console.log("changing")
+            let datax = {
+            isbn : $("#isbn").val()
+            }
+             axios.get(baseUrlLocal+'/register/bookmodel/'+datax.isbn)
+             .then(function (response) {
+                let form_details = response.data.data;
+                console.log(form_details[0].Qty)
+                $("#qty").val(form_details[0].Qty);  
+                $("#fromdate").val(form_details[0].FromDate);  
+                $("#todate").val(form_details[0].ToDate);  
+     
+             })
+             .catch(function (error) {
+                 // handle error
+                 console.log(error);
+             });
+
+             axios.get(baseUrlLocal + '/book/info/'+datax.isbn).then(function (response) {
+                if (response.data) {
+                    console.log(response);
+                   pricePerDay = response.data.data[0].PricePerDay;
+                   console.log(pricePerDay);
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        })
+        });

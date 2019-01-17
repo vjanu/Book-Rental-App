@@ -23,7 +23,15 @@ router.post('/info/user/:lno', function(req, res) {
             Address: req.body.address,
             LicenseNumber: req.body.lno,
             Email: req.body.email,
-            Password: req.body.password
+            Password: req.body.password,
+            ISBN: "0",
+            FromDate: "0",
+            ToDate: "0",
+            ReturnedDate: "0",
+            FeeDate: "0",
+            Fee: 0,
+            Qty: 0
+        
         });
 
         registerData.save(err => { 
@@ -49,7 +57,53 @@ router.get('/info/user/:email', function (req, res) {
         } else if (data.length === 0) {
             res.status(404).send({
                 success: false,
-                message: 'Invalid License ID provided.'
+                message: 'Invalid email provided.'
+            });
+        } else {
+            res.status(200).send({
+                success: true,
+                data: data
+            });
+        }
+    });
+});
+
+
+
+
+router.post('/info/:email', (req, res) => {
+    var email = req.params.email;
+    regForm.registerModel.updateOne({ Email: email }, { 
+        ISBN: req.body.ISBN,
+        FromDate: req.body.FromDate,
+        ToDate: req.body.ToDate,
+        ReturnedDate: req.body.ReturnedDate,
+        FeeDate: req.body.FeeDate,
+        Fee: req.body.Fee,
+        Qty:req.body.Qty
+    }, function(err, result){
+        res.status(200).send({ success: true, message:"Updated"  });
+    }
+);
+});
+
+
+router.get('/bookmodel/:isbn', function (req, res) {
+    regForm.registerModel.find({
+        ISBN: req.params.isbn,
+    }, {
+        _id: 0,
+        __v: 0
+    }, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                success: false,
+                message: 'Something went wrong.'
+            });
+        } else if (data.length === 0) {
+            res.status(404).send({
+                success: false,
+                message: 'Invalid email provided.'
             });
         } else {
             res.status(200).send({

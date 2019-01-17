@@ -18,6 +18,10 @@
     <!-- lato font(from google fonts) -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ 
+
+     
 
     <title>Home</title>
 </head>
@@ -80,7 +84,12 @@
                         <div class="card">
                             
                             <div class="card-body">
-                                <div>image</div>
+                                    <div class="card">
+                                            <div class="card-body">
+                                                    <div>image</div>
+                                            </div>
+                                        </div>
+                               
                                     <form>
                                             <div class="row">
                                                     <div class="col-6">
@@ -145,23 +154,47 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="col-md-4 col-sm-2">
+                                                From: <input type="text" id="datepicker1">
+                                        </div>
+                                        <div class="col-md-4 col-sm-2">
+                                            To: <input type="text" id="datepicker2">
+                                       </div>     
+                                            <div class="col-md-4 col-sm-2">
+                                                    <fieldset disabled>
+                                                            <label class="sr-only" for="inlineFormInputGroupUsername2">Days</label>
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                                    <input type="text" class="form-control" id="days" placeholder="Days" >
+                                                              
+                                                                <div class="input-group-prepend">
+                                                                <div class="input-group-text">days</div>
+                                                              </div>
+                                                            </div>
+                                                            </fieldset>
+                                            </div>
                                             
-                                            <div class="form-group">
-                                                    <div class='input-group date' id='datetimepicker1'>
-                                                        <input type='text' class="form-control" />
-                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
+
+                                       
+                                </div>
+                                <div class="row">
+                                        <div class="col-md-4 col-sm-2">
+                                                <fieldset disabled>
+                                                <label class="sr-only" for="inlineFormInputGroupUsername2">Total Price</label>
+                                                <div class="input-group mb-2 mr-sm-2">
+                                                  <div class="input-group-prepend">
+                                                    <div class="input-group-text">$</div>
+                                                  </div>
+                                                  <input type="text" class="form-control" id="tot" placeholder="Total Price">
                                                 </div>
-                                               
-                                            
+                                                </fieldset>
                                         </div>
 
-                                    <div class="row">
-                                            <a href="#" title="" id ="btn-rent" class="btn btn-primary">
-                                                    <span class="fa fa-book" aria-hidden="true"></span>
-                                                    <span><strong>Rent Book</strong></span></a>
-                                    </div>
+                                        <div class="col-md-4 col-sm-2">
+                                                <button id ="btn-rent" class="btn btn-primary" onclick="updateUserWithRentedDetails();paypalIntegration()">
+                                                        <span class="fab fa-paypal" aria-hidden="true"></span>
+                                                        <span><strong>Rent Book-</strong></span>Pay via Paypal</button>
+                                        </div>
+                                </div>
                         </div>
                     </div>
                   </div>
@@ -214,6 +247,7 @@
     <script src="js/index.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
  
 </body>

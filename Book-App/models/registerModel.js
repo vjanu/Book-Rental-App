@@ -8,7 +8,17 @@ let registerSchema = mongoose.Schema({
     Address: String,
     LicenseNumber: String,
     Email: String,
-    Password: String
+    Password: String,
+
+    //For Renting book
+    ISBN: String,
+    FromDate: String,
+    ToDate: String,
+    ReturnedDate: String,
+    FeeDate: Number,
+    Fee: Number,
+    Qty: Number
+
   
 });
 
