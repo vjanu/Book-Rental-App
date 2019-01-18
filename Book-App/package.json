@@ -12,6 +12,7 @@
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
+    "ejs": "^2.6.1",
     "express": "~4.16.0",
     "fs": "0.0.1-security",
     "mocha": "^5.2.0",

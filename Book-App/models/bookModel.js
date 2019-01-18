@@ -13,7 +13,6 @@ let bookSchema = mongoose.Schema({
 });
 
 let imageSchema = mongoose.Schema({
-    ISBN: String,
     img: { data: Buffer, contentType: String }
 });
 

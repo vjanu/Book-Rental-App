@@ -86,11 +86,11 @@ router.get('/rent', function (req, res) {
 });
 
 // *********** Storing images **********************
-// for(var i=1; i<=7; i++){
-// var imgPath = '././images/'+3+'.png';
+// for(var i=1; i<=11; i++){
+var imgPath = '././images/'+11+'.png';
 var A = bookForm.imageModel;
-// var a = new A;
-//     a.ISBN = "333"
+var a = new A;
+// //     a.ISBN = "333"
 //     a.img.data = fs.readFileSync(imgPath);
 //     a.img.contentType = 'image/png';
 //     a.save(function (err, a) {
@@ -101,47 +101,54 @@ var A = bookForm.imageModel;
 // ); 
 
 
-    // router.get('/image/:isbn', function (req, res, next) {
-    //     A.find({
-    //         ISBN: req.params.isbn,
-    //     }, {
-    //         _id: 0,
-    //         __v: 0
-    //     }, (err, data) => {
-    //         if (err) {
-    //             res.status(500).send({
-    //                 success: false,
-    //                 message: 'Something went wrong.'
-    //             });
-    //         } else if (data.length === 0) {
-    //             res.status(404).send({
-    //                 success: false,
-    //                 message: 'Invalid ISBN provided.'
-    //             });
-    //         } else {
-    //             res.contentType(data.img.contentType);
-    //             res.send(data.img.data);
-    //         }
-    //     });
+    router.get('/image/:isbn', function (req, res, next) {
+        A.findOne({
+            ISBN: req.params.isbn,
+        }, {
+            __v: 0
+        }, (err, doc) => {
+            if (err) {
+                res.status(500).send({
+                    success: false,
+                    message: err
+                });
+            } else if (doc.length === 0) {
+                res.status(404).send({
+                    success: false,
+                    message: 'Invalid ISBN provided.'
+                });
+            } else {
+                // res.contentType(doc.img.contentType);
+                res.send(doc.img.data);
+            }
+        });
 
         // A.findById( req.params.isbn, function(err,user) {
         //   if (err) return next(err);
         //   res.contentType(doc.img.contentType);
         //   res.send(doc.img.data);
         // });
-    //   });
+      });
 // }
 
 
 // Get profile picture
-router.get('/image/:_id', function(req,res,next) {
-    A.findById( req.params._id, function(err,user) {
-        if (err) return next(err);
-        // res.contentType(user.img.contentType);
-        // res.send(user.img.data);
-        res.send(user.isbn);
-    });
-  });
+// router.get('/image', function(req,res,next) {
+//     A.find(function(err,user) {
+//         if (err) return next(err);
+//         res.contentType(user.img.contentType);
+//         res.send(user.img.data);
+//         // res.send(user.isbn);
+//     });
+//   });
+
+// router.get('/image', function (req, res, next) {
+//     A.findById(a, function (err, doc) {
+//       if (err) return next(err);
+//       res.contentType(doc.img.contentType);
+//       res.send(doc.img.data);
+//     });
+//   });
 
 
   router.get('/rent/x/:isbn', function (req, res) {

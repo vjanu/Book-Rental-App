@@ -4,6 +4,7 @@ let USER_INFO = 'user_info';
 let CURRENT_URL = window.location.href;
 let pricePerDay;
 
+
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
     'Content-Type': 'application/json',
@@ -107,6 +108,7 @@ if (CURRENT_URL.includes('available_books')) {
 }
 if (CURRENT_URL.includes('book_details')) {
     getBookDetails();
+    // loadImages();
     initiateDatePickers();
 }
 
@@ -445,6 +447,7 @@ function getImages() {
 
 function getBookDetails(){
         let isbn=''
+        let form_details;
         if (CURRENT_URL.includes('#')) {
              isbn = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
             console.log(isbn);
@@ -452,7 +455,7 @@ function getBookDetails(){
             axios.get(baseUrlLocal+'/book/info/'+isbn)
            .then(response => {
         if (response.data.success) {
-            let form_details = response.data.data;
+             form_details = response.data.data;
             console.log(response.data);           
             console.log(form_details[0]);         
             console.log(form_details[0].BookName); 
@@ -462,8 +465,11 @@ function getBookDetails(){
             $("#price").val(form_details[0].PricePerDay);  
             $("#ISBN").val(form_details[0].ISBN);  
             $("#author").val(form_details[0].Author);  
+            document.getElementById('image').src = "./images/" + form_details[0].ISBN + ".png";
         }
         })
+
+        
 }
 
 
@@ -696,6 +702,32 @@ function insertEachUserRent() {
             return html;
         }
     
+    // ************ Display Images****************
+    
+//     function loadImages() {
+//         let isbn=''
+//         let imgSource=''
+//         if (CURRENT_URL.includes('#')) {
+//              isbn = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+//             console.log(isbn);
+//         }
+
+//         axios.get(baseUrlLocal + '/book/image/'+isbn)
+//         .then(response => {
+//             console.log(response.data)
+//         document.getElementById('imgSource')
+//         .setAttribute(
+//         'src', 'data:image/png;base64,' + btoa(unescape(encodeURIComponent(response)))
+//       );
+
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         });
+      
+    
+      
+// }
     
       
 
