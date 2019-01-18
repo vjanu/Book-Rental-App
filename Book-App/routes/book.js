@@ -9,22 +9,22 @@ var fs = require('fs');
 router.post('/', function(req, res) {
 
         let bookData = bookForm.bookModel({
-            ISBN: req.body.isbn,
-            BookName: req.body.bookName,
-            Author: req.body.author,
-            PricePerDay: req.body.pricePerDay,
-            AvailableDate: req.body.availableDate,
-            RentedBy: req.body.rentedBy,
-            Rented: req.body.rented,
-            Description: req.body.description
+            ISBN: req.body.ISBN,
+            BookName: req.body.BookName,
+            Author: req.body.Author,
+            PricePerDay: req.body.PricePerDay,
+            AvailableDate: req.body.AvailableDate,
+            RentedBy: req.body.RentedBy,
+            Rented: req.body.Rented,
+            Description: req.body.Description
         });
 
         bookData.save(err => { 
-            console.log(err); 
+            console.log("No Results"); 
         });
  
     
-    res.send({success: "Successfully Added" });
+    res.send({success: true });
 });
 
 router.get('/info', function (req, res) {
@@ -169,4 +169,31 @@ router.get('/image/:_id', function(req,res,next) {
     });
 });
 
+
+// Updating rented flag after return of the book
+router.post('/returned/:isbn', (req, res) => {
+    var isbn = req.params.isbn;
+    bookForm.bookModel.updateOne({ ISBN: isbn }, { 
+        Rented: 0
+    
+    
+    }, function(err, result){
+        res.status(200).send({ success: true, message:"Updated"  });
+    }
+);
+});
+
+router.post('/:isbn', (req, res) => {
+    var isbn = req.params.isbn;
+    bookForm.bookModel.updateOne({ ISBN: isbn }, { 
+        Rented: 1,
+        AvailableDate: req.body.availableDate,
+        RentedBy: req.body.rentedBy
+    
+    
+    }, function(err, result){
+        res.status(200).send({ success: true, message:"Updated"  });
+    }
+);
+});
 module.exports = router;

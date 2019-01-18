@@ -87,7 +87,19 @@ router.post('/info/:email', (req, res) => {
 );
 });
 
-
+router.post('/info/returned/:isbn', (req, res) => {
+    var isbn = req.params.isbn;
+    regForm.registerModel.updateOne({ ISBN: isbn }, { 
+        ReturnedDate: req.body.ReturnedDate,
+        FeeDate: req.body.FeeDate,
+        Fee: req.body.Fee
+    
+    
+    }, function(err, result){
+        res.status(200).send({ success: true, message:"Updated"  });
+    }
+);
+});
 router.get('/bookmodel/:isbn', function (req, res) {
     regForm.registerModel.find({
         ISBN: req.params.isbn,

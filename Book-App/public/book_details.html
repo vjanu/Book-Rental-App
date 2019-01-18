@@ -130,8 +130,9 @@
                         <div class="card-body">
                                 <div class="row">
                                         <div class="col-md-6">
+                                                <div class="form-group row">
                                                 <fieldset disabled>
-                                                <label class="sr-only" for="inlineFormInputGroupUsername2">Price</label>
+                                                <label>One Day Price</label>
                                                 <div class="input-group mb-2 mr-sm-2">
                                                   <div class="input-group-prepend">
                                                     <div class="input-group-text">$</div>
@@ -139,58 +140,58 @@
                                                   <input type="text" class="form-control" id="price" placeholder="Price">
                                                 </div>
                                                 </fieldset>
-                                        </div>
+                                        </div></div>
                                         <div class="col-md-6">
-                                            <form>
+                                          
                                             <div class="form-group row">
-                                                    <label for="inputPassword" class="col-sm-2 col-form-label">Qty</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="number" class="form-control" id="qty" placeholder="Qty" min="1">
-                                                    </div>
-                                                    </div>
-                                                </form>
+                                                    <fieldset disabled>
+                                                            <label  for="inlineFormInputGroupUsername2">Total Price</label>
+                                                            <div class="input-group mb-2 mr-sm-2">
+                                                              <div class="input-group-prepend">
+                                                                <div class="input-group-text">$</div>
+                                                              </div>
+                                                              <input type="text" class="form-control" id="tot" placeholder="Total Price">
+                                                            </div>
+                                                            </fieldset>            
+                                            </div>      
                                         </div>
                                         
-                                    </div>
+                                </div>
 
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-2">
-                                                From: <input type="text" id="datepicker1">
+                                        <div class="col-md-3 col-sm-2">
+                                                <!-- <label for="inputPassword" class="col-sm-2 col-form-label">Qty</label> -->
+                                        
+                                                    <input type="number" class="form-control" id="qty" placeholder="Qty" min="1">
+                                           
+                                                
                                         </div>
                                         <div class="col-md-4 col-sm-2">
-                                            To: <input type="text" id="datepicker2">
+                                                From: <input type="text" id="datepicker1">
                                        </div>     
                                             <div class="col-md-4 col-sm-2">
-                                                    <fieldset disabled>
-                                                            <label class="sr-only" for="inlineFormInputGroupUsername2">Days</label>
-                                                            <div class="input-group mb-2 mr-sm-2">
-                                                                    <input type="text" class="form-control" id="days" placeholder="Days" >
-                                                              
-                                                                <div class="input-group-prepend">
-                                                                <div class="input-group-text">days</div>
-                                                              </div>
-                                                            </div>
-                                                            </fieldset>
+                                                    To: <input type="text" id="datepicker2">
+                                                    
                                             </div>
-                                            
-
-                                       
+                                           
                                 </div>
+                                <br/>
                                 <div class="row">
                                         <div class="col-md-4 col-sm-2">
                                                 <fieldset disabled>
-                                                <label class="sr-only" for="inlineFormInputGroupUsername2">Total Price</label>
-                                                <div class="input-group mb-2 mr-sm-2">
-                                                  <div class="input-group-prepend">
-                                                    <div class="input-group-text">$</div>
-                                                  </div>
-                                                  <input type="text" class="form-control" id="tot" placeholder="Total Price">
-                                                </div>
-                                                </fieldset>
+                                                        <label class="sr-only" for="inlineFormInputGroupUsername2">Days</label>
+                                                        <div class="input-group mb-2 mr-sm-2">
+                                                                <input type="text" class="form-control" id="days" placeholder="Days" >
+                                                          
+                                                            <div class="input-group-prepend">
+                                                            <div class="input-group-text">days</div>
+                                                          </div>
+                                                        </div>
+                                                        </fieldset>  
                                         </div>
 
                                         <div class="col-md-4 col-sm-2">
-                                                <button id ="btn-rent" class="btn btn-primary" onclick="updateUserWithRentedDetails();paypalIntegration()">
+                                                <button id ="btn-rent" class="btn btn-primary" onclick="insertEachUserRent();updateUserWithRentedDetails();paypalIntegration()">
                                                         <span class="fab fa-paypal" aria-hidden="true"></span>
                                                         <span><strong>Rent Book-</strong></span>Pay via Paypal</button>
                                         </div>

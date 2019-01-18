@@ -19,6 +19,11 @@ $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
 
+$('#btn-rent-final').on('click', function () {
+    updateFee();
+});
+
+
 $('#btn-logout').on('click', function (e) {
     e.preventDefault();
     localStorage.removeItem('login_info');
@@ -77,6 +82,7 @@ $( function() {
         console.log(diff);
         // get days
         var days = diff/1000/60/60/24;
+        if(days<0){days=0;}
         $('#additionaldate').val(days);
         console.log(days)
         var fee = pricePerDay * 0.5 * days;
@@ -91,6 +97,7 @@ $( function() {
 
 if (CURRENT_URL.includes('user_dashboard')) {
     getUser();
+    loadRentedBooksTable();
 }
 if (CURRENT_URL.includes('all_books')) {
     loadBooksTable();
@@ -214,31 +221,36 @@ function getUser() {
             console.log(form_details[0]);
             console.log(form_details[0].FirstName);
             console.log(form_details.length);
-            $(document).ready(function () {
+            $('#first-name').html(form_details[0].FirstName);
+            $('#last-name').html(form_details[0].LastName);
+            $('#email').html(form_details[0].Email);
+            $('#lno').html(form_details[0].LicenseNumber);
+            // $('#full-name').html(form_details[0].FirstName);
+            // $(document).ready(function () {
                 
-                var html = "<table  align='center' style='width:1068px' border='1|1' class='table-bordered table-hover'>";
-                html+="<head>";
-                html+="<tr>";
-                html+="<td width='10%'align='center'> "+'<b>'+'First Name'+'</b>'+" </td>";
-                html+="<td width='10%'align='center'> "+'<b>'+'Last Name'+'</b>'+" </td>";
-                html+="<td width='30%'align='center'> "+'<b>'+'Address'+'</b>'+" </td>";
-                html+="<td width='20%'align='center'> "+'<b>'+'License Number'+'</b>'+" </td>";
-                html+="<td width='30%'align='center'> "+'<b>'+'Email'+'</b>'+" </td>";
-                html+="</tr>";
-                html+="</head>";
+            //     var html = "<table  align='center' style='width:1068px' border='1|1' class='table-bordered table-hover'>";
+            //     html+="<head>";
+            //     html+="<tr>";
+            //     html+="<td width='10%'align='center'> "+'<b>'+'First Name'+'</b>'+" </td>";
+            //     html+="<td width='10%'align='center'> "+'<b>'+'Last Name'+'</b>'+" </td>";
+            //     html+="<td width='30%'align='center'> "+'<b>'+'Address'+'</b>'+" </td>";
+            //     html+="<td width='20%'align='center'> "+'<b>'+'License Number'+'</b>'+" </td>";
+            //     html+="<td width='30%'align='center'> "+'<b>'+'Email'+'</b>'+" </td>";
+            //     html+="</tr>";
+            //     html+="</head>";
 
-                html+="<body>";
-                html+="<td width='10%'align='center'> "+'<b>'+form_details[0].FirstName+'</b>'+" </td>";
-                html+="<td width='10%'align='center'> "+'<b>'+form_details[0].LastName+'</b>'+" </td>";
-                html+="<td width='30%'align='center'> "+'<b>'+form_details[0].Address+'</b>'+" </td>";
-                html+="<td width='20%'align='center'> "+'<b>'+form_details[0].LicenseNumber+'</b>'+" </td>";
-                html+="<td width='30%'align='center'> "+'<b>'+form_details[0].Email+'</b>'+" </td>";
+            //     html+="<body>";
+            //     html+="<td width='10%'align='center'> "+'<b>'+form_details[0].FirstName+'</b>'+" </td>";
+            //     html+="<td width='10%'align='center'> "+'<b>'+form_details[0].LastName+'</b>'+" </td>";
+            //     html+="<td width='30%'align='center'> "+'<b>'+form_details[0].Address+'</b>'+" </td>";
+            //     html+="<td width='20%'align='center'> "+'<b>'+form_details[0].LicenseNumber+'</b>'+" </td>";
+            //     html+="<td width='30%'align='center'> "+'<b>'+form_details[0].Email+'</b>'+" </td>";
 
-                html+="</body>";
+            //     html+="</body>";
 
-                html+="</table>";
-                $("#user-data-table").html(html);
-            })
+            //     html+="</table>";
+            //     $("#user-data-table").html(html);
+            // })
             
         }
     })
@@ -281,10 +293,7 @@ function getBookTable(tableId, book) {
             '<th class="text-center" scope="col">Name of the Book</th>' +
             '<th class="text-center" scope="col">Author</th>' +
             '<th class="text-center" scope="col">Price Per Day</th>' +
-            '<th class="text-center" scope="col">Available Date</th>' +
-            '<th class="text-center" scope="col">Rented By</th>' +
             '<th class="text-center" scope="col">Status</th>' +
-            // '<th class="text-center" scope="col">More Details</th>' +
             '</tr>' +
             '</thead>' +
             '<tbody>';  
@@ -297,16 +306,7 @@ function getBookTable(tableId, book) {
                     '<td align="center">' + request.BookName + '</td>' +
                     '<td align="center">' + request.Author + '</td>' +
                     '<td align="center">' + request.PricePerDay  + '</td>' +
-                    '<td align="center">' + request.AvailableDate  + '</td>' +
-                    '<td align="center">' + request.RentedBy  + '</td>' +
                     '<td align="center">' + isRented(request.Rented)  + '</td>' +
-                    // '<td align="center">' +
-                    // '<a href="book_details.html#'+request.ISBN+'"title="" class="btn btn-primary btn-sm">\n' +
-                    // '        <span class="far fa-check-square" aria-hidden="true"></span>\n' +
-                    // '        <span><strong>View</strong></span></a>'+
-                    //  '</a>' +
-                    // '</td>' ;
-                    
                 '</tr>';
         });
     
@@ -501,6 +501,16 @@ function updateUserWithRentedDetails() {
         
             console.log(error);
         })
+
+    axios.post(baseUrlLocal+'/book/'+data.ISBN,data, {headers: headers})
+        .then(response => {
+           
+        })
+        .catch(error => {
+            $.notify("Invalid Updation","warn");
+        
+            console.log(error);
+        })
 }
 
 function getBookDetailsForFinalRent(){
@@ -548,3 +558,145 @@ $(document).ready(function() {
             });
         })
         });
+
+
+// ************ Updating returned books*******************
+
+function updateFee() {
+    let isbn = $("#isbn").val()
+   
+    let data = {
+       
+        ReturnedDate: $("#returndate").val(),
+        FeeDate: $("#additionaldate").val(),
+        Fee: $("#latefee").val()
+       
+    }
+
+    console.log(data);
+
+    if(isbn.length != 0||data.ReturnedDate.length != 0||data.FeeDate.length != 0||data.Fee.length != 0){
+    axios.post(baseUrlLocal+'/register/info/returned/'+isbn,data, {headers: headers})
+    .then(response => {
+        if (response.data.success) {
+        alert(response.data);
+        $.notify("Successfully Updated with the details", "success");
+    }
+        })
+        .catch(function (error) {
+            $.notify("Please fill all the details","warn");
+        });
+    }
+    else{
+        $.notify("Please fill all the details","warn");
+    }
+    axios.post(baseUrlLocal+'/book/returned/'+isbn,data, {headers: headers})
+        .then(response => {
+       
+        })
+        .catch(error => {
+            $.notify("Invalid Updation","warn");
+        
+            console.log(error);
+        })
+
+    axios.post(baseUrlLocal+'/rent/book/'+isbn,data, {headers: headers})
+    .then(response => {
+    
+    })
+    .catch(error => {
+        $.notify("Invalid Updation","warn");
+    
+        console.log(error);
+    })
+}
+
+
+function insertEachUserRent() {
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
+    let email = userInfo.userData.Email;
+    let rentData = {
+        Email:email,
+        ISBN: $("#ISBN").val(),
+        BookName: $("#book-name").text(),
+        Author: $("#author").val(),
+        Fee: 0   
+    }   
+
+
+    axios.post(baseUrlLocal + '/rent/' + rentData.ISBN, rentData, {
+            headers: headers
+        })
+    .then(response => {
+        console.log(response);
+        if(response.data.success){
+          
+        }else{
+         
+        }
+    })
+    .catch(error => {
+        console.log("No Rented Books");
+    })
+
+}
+
+    /***********  View Available Books For Rent ******************/
+
+
+    function loadRentedBooksTable() {
+        let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
+        let email = userInfo.userData.Email;
+        console.log(userInfo)
+        axios.get(baseUrlLocal + '/rent/'+email)
+        .then(response => {
+            if (response.status == 200) {
+                console.log(response.data);
+                $('#view-rented-books-user').append(getRentedBookTable('rented-books', response.data));
+                window.$('#rented-books').DataTable();
+            }
+        })
+        .catch(err => {
+            console.log("No Rented Books");
+        });
+    }
+    
+    
+    
+    function getRentedBookTable(tableId, book) {
+            let html =
+                '<table class="table table-bordered table-hover" id="'+ tableId +'">' +
+                '<thead>' +
+                '<tr>' +
+                '<th class="text-center" scope="col">ISBN</th>' +
+                '<th class="text-center" scope="col">Name of the Book</th>' +
+                '<th class="text-center" scope="col">Author</th>' +
+                '<th class="text-center" scope="col">Late Fees Paid($)</th>' +
+              
+                '</tr>' +
+                '</thead>' +
+                '<tbody>';  
+        
+            
+                book.forEach(request => {
+                html +=
+                    '<tr>'+
+                        '<td align="center">' + request.ISBN + '</td>' +
+                        '<td align="center">' + request.BookName + '</td>' +
+                        '<td align="center">' + request.Author + '</td>' +
+                        '<td align="center">' + request.Fee  + '</td>' +
+               
+                        
+                        
+                    '</tr>';
+            });
+        
+            html += '</tbody></table>'; 
+        
+            return html;
+        }
+    
+    
+      
+
+    

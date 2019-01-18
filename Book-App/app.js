@@ -7,6 +7,7 @@ const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const bookRouter = require('./routes/book');
+const rentRouter = require('./routes/rent');
 const cors = require('cors');
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/book', bookRouter);
+app.use('/rent', rentRouter);
 
 
 module.exports = app;

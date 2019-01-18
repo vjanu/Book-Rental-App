@@ -65,57 +65,53 @@
 
     <div class="content-wrapper">
 
-
+            <h4 align="center">Overview</h4>
         <div class="container">
 
             <div class="row mt-5">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card-counter primary">
                         <i class="fas fa-code-branch"></i>
-                        <span class="count-numbers">12</span>
-                        <span class="count-name">Flowz</span>
+                        <span class="count-numbers" id="first-name"></span>
+                        <span class="count-name">First Name</span>
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card-counter danger">
                         <i class="far fa-paper-plane"></i>
-                        <span class="count-numbers">599</span>
-                        <span class="count-name">Instances</span>
+                        <span class="count-numbers" id="last-name"></span>
+                        <span class="count-name">Last Name</span>
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <!-- <div class="col-md-3">
                     <div class="card-counter success">
                         <i class="fa fa-database"></i>
-                        <span class="count-numbers">6875</span>
-                        <span class="count-name">Data</span>
+                        <span class="count-numbers" id="email"></span>
+                        <span class="count-name">Email</span>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card-counter info">
                         <i class="fa fa-users"></i>
-                        <span class="count-numbers">35</span>
-                        <span class="count-name">Users</span>
+                        <span class="count-numbers" id="lno"></span>
+                        <span class="count-name">License No</span>
                     </div>
                 </div>
             </div>
 
-
-
-            <div class="row mt-5">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Personal Information</h5>
-                            <div id="user-data-table"></div>
-                        </div>
+<br/><br/>
+            <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">Rented Books</h4>
+                    </div>
+                    <div class="card-body" id="view-rented-books-user">
+                        
+                        
                     </div>
                 </div>
-            </div>
-
-
         </div>
 
 
@@ -164,6 +160,8 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/index.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 </body>
 
 </html>
