@@ -42,4 +42,4 @@ PS: To login with the admin username is: admin@gmail.com   password is admin
 
 ----------------------------------------------------------------------------------------
 
-Note: To add a new book you can use add_book.html and for the image of that particular book, you should save a image inside the image folder with the ISBN of the book.
+Note: To add a new book you can use add_book.html and for the image of that particular book, you should save a image inside the image folder with the ISBN of the book. Images should be in .png format.
