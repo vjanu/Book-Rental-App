@@ -56,11 +56,11 @@ router.get('/:email', function (req, res) {
 //Updating late fees after books is returned
 router.post('/book/:isbn', (req, res) => {
     var isbn = req.params.isbn;
-    rentForm.rentModel.updateOne({ ISBN: isbn }, { 
+    rentForm.rentModel.update({ ISBN: isbn }, { 
         Fee: req.body.Fee
 
     }, function(err, result){
-        res.status(200).send({ success: true, message:"Updated"  });
+        res.status(200).send({ success: true, message: req.body.Fee  });
     }
  );
 });

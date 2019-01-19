@@ -535,9 +535,9 @@ function updateFee() {
     .then(response => {
         if (response.data.success) {
         $.notify("Successfully Updated with the details", "success");
-        $("#returndate").val(''),
-        $("#additionaldate").val(''),
-        $("#latefee").val('')
+        // $("#returndate").val(''),
+        // $("#additionaldate").val(''),
+        // $("#latefee").val('')
     }
         })
         .catch(function (error) {

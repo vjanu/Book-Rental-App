@@ -16,4 +16,4 @@ let bookSchema = mongoose.Schema({
 
 let bookModel = mongoose.model('book', bookSchema);
 
-module.exports = { bookModel, imageModel };
+module.exports = { bookModel };
