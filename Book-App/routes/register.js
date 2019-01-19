@@ -42,6 +42,8 @@ router.post('/info/user/:lno', function(req, res) {
     res.send({ success: allParamsPresent });
 });
 
+
+//Getting user details using the email
 router.get('/info/user/:email', function (req, res) {
     regForm.registerModel.find({
         Email: req.params.email,
@@ -68,9 +70,7 @@ router.get('/info/user/:email', function (req, res) {
     });
 });
 
-
-
-
+//Updating user details
 router.post('/info/:email', (req, res) => {
     var email = req.params.email;
     regForm.registerModel.updateOne({ Email: email }, { 
@@ -84,9 +84,10 @@ router.post('/info/:email', (req, res) => {
     }, function(err, result){
         res.status(200).send({ success: true, message:"Updated"  });
     }
-);
+ );
 });
 
+//Updating returned book
 router.post('/info/returned/:isbn', (req, res) => {
     var isbn = req.params.isbn;
     regForm.registerModel.updateOne({ ISBN: isbn }, { 
@@ -98,8 +99,10 @@ router.post('/info/returned/:isbn', (req, res) => {
     }, function(err, result){
         res.status(200).send({ success: true, message:"Updated"  });
     }
-);
+ );
 });
+
+//Getting relevant book the rented table
 router.get('/bookmodel/:isbn', function (req, res) {
     regForm.registerModel.find({
         ISBN: req.params.isbn,

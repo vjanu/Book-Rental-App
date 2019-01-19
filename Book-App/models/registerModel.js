@@ -1,8 +1,9 @@
 const db = require('./mongodb').db;
 const mongoose = require('./mongodb').mongoose;   // connection is already established @mongodb.js file.
 
+//Creating SChema for the registration
 let registerSchema = mongoose.Schema({
-    // following are filled by student.
+    //borrower details
     FirstName: String,
     LastName: String,
     Address: String,

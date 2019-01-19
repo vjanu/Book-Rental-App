@@ -1,6 +1,7 @@
 const db = require('./mongodb').db;
 const mongoose = require('./mongodb').mongoose;   // connection is already established @mongodb.js file.
 
+//Creating the Schema for book
 let bookSchema = mongoose.Schema({
     ISBN: String,
     BookName: String,
@@ -12,11 +13,7 @@ let bookSchema = mongoose.Schema({
     Description: String
 });
 
-let imageSchema = mongoose.Schema({
-    img: { data: Buffer, contentType: String }
-});
 
 let bookModel = mongoose.model('book', bookSchema);
-let imageModel = mongoose.model('image', imageSchema);
 
 module.exports = { bookModel, imageModel };

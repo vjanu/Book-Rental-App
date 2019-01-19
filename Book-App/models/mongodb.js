@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const url = 'mongodb://127.0.0.1/internships';
 const url = 'mongodb://admin:admin123@ds155714.mlab.com:55714/library';
 
 // connect to database.

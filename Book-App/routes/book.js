@@ -3,9 +3,7 @@ const router = express.Router();
 const bookForm = require('../models/bookModel');
 var fs = require('fs');
 
-
-
-
+//POST request to add a new book
 router.post('/', function(req, res) {
 
         let bookData = bookForm.bookModel({
@@ -20,13 +18,15 @@ router.post('/', function(req, res) {
         });
 
         bookData.save(err => { 
-            console.log("No Results"); 
+            console.log(err); 
         });
  
     
     res.send({success: true });
 });
 
+
+//Getting all the books in the library
 router.get('/info', function (req, res) {
     bookForm.bookModel.find().exec().then((data) => {
         res.send(data);
@@ -35,6 +35,8 @@ router.get('/info', function (req, res) {
     })
 });
 
+
+//Getting relevant book using ISBN
 router.get('/info/:isbn', function (req, res) {
     bookForm.bookModel.find({
         ISBN: req.params.isbn,
@@ -61,7 +63,7 @@ router.get('/info/:isbn', function (req, res) {
     });
 });
 
-
+//Getting relevant rented book 
 router.get('/rent', function (req, res) {
     bookForm.bookModel.find({
         Rented: 0,
@@ -85,73 +87,8 @@ router.get('/rent', function (req, res) {
     });
 });
 
-// *********** Storing images **********************
-// for(var i=1; i<=11; i++){
-var imgPath = '././images/'+11+'.png';
-var A = bookForm.imageModel;
-var a = new A;
-// //     a.ISBN = "333"
-//     a.img.data = fs.readFileSync(imgPath);
-//     a.img.contentType = 'image/png';
-//     a.save(function (err, a) {
-//       if (err) throw err;
-
-//       console.error('saved img to mongo');
-//     }   
-// ); 
-
-
-    router.get('/image/:isbn', function (req, res, next) {
-        A.findOne({
-            ISBN: req.params.isbn,
-        }, {
-            __v: 0
-        }, (err, doc) => {
-            if (err) {
-                res.status(500).send({
-                    success: false,
-                    message: err
-                });
-            } else if (doc.length === 0) {
-                res.status(404).send({
-                    success: false,
-                    message: 'Invalid ISBN provided.'
-                });
-            } else {
-                // res.contentType(doc.img.contentType);
-                res.send(doc.img.data);
-            }
-        });
-
-        // A.findById( req.params.isbn, function(err,user) {
-        //   if (err) return next(err);
-        //   res.contentType(doc.img.contentType);
-        //   res.send(doc.img.data);
-        // });
-      });
-// }
-
-
-// Get profile picture
-// router.get('/image', function(req,res,next) {
-//     A.find(function(err,user) {
-//         if (err) return next(err);
-//         res.contentType(user.img.contentType);
-//         res.send(user.img.data);
-//         // res.send(user.isbn);
-//     });
-//   });
-
-// router.get('/image', function (req, res, next) {
-//     A.findById(a, function (err, doc) {
-//       if (err) return next(err);
-//       res.contentType(doc.img.contentType);
-//       res.send(doc.img.data);
-//     });
-//   });
-
-
-  router.get('/rent/x/:isbn', function (req, res) {
+//Finding rented book using ISBN
+router.get('/rent/x/:isbn', function (req, res) {
     A.findOne({
         ISBN: req.params.isbn,
     }, {
@@ -176,7 +113,6 @@ var a = new A;
     });
 });
 
-
 // Updating rented flag after return of the book
 router.post('/returned/:isbn', (req, res) => {
     var isbn = req.params.isbn;
@@ -187,9 +123,10 @@ router.post('/returned/:isbn', (req, res) => {
     }, function(err, result){
         res.status(200).send({ success: true, message:"Updated"  });
     }
-);
+ );
 });
 
+//Updating book after renting it
 router.post('/:isbn', (req, res) => {
     var isbn = req.params.isbn;
     bookForm.bookModel.updateOne({ ISBN: isbn }, { 
@@ -201,6 +138,8 @@ router.post('/:isbn', (req, res) => {
     }, function(err, result){
         res.status(200).send({ success: true, message:"Updated"  });
     }
-);
+ );
 });
+
+
 module.exports = router;

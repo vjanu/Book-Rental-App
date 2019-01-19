@@ -24,6 +24,9 @@ $('#btn-rent-final').on('click', function () {
     updateFee();
 });
 
+$('#btn-add').on('click', function () {
+    addNewBook();
+});
 
 $('#btn-logout').on('click', function (e) {
     e.preventDefault();
@@ -31,6 +34,8 @@ $('#btn-logout').on('click', function (e) {
 	window.location.href = "index.html";
 });
 
+
+/****** Function to initialize datepickers with the current date and triggers them for changes*/
 function initiateDatePickers(){
  $( function() {
     $('#datepicker1').datepicker({ dateFormat: 'yy-mm-dd' ,
@@ -72,7 +77,7 @@ function initiateDatePickers(){
 }
 
 function returnDatePicker(){
-$( function() {
+ $( function() {
     $('#returndate').datepicker({ dateFormat: 'yy-mm-dd' ,
     minDate: 0,
     onSelect: function(date){
@@ -91,11 +96,11 @@ $( function() {
         
     }
   }).val();
-});
+ });
 }
 
 
-
+/****** Loading the methods when page loads ******/ 
 if (CURRENT_URL.includes('user_dashboard')) {
     getUser();
     loadRentedBooksTable();
@@ -108,32 +113,14 @@ if (CURRENT_URL.includes('available_books')) {
 }
 if (CURRENT_URL.includes('book_details')) {
     getBookDetails();
-    // loadImages();
     initiateDatePickers();
 }
-
 if (CURRENT_URL.includes('returned_books')) {
     returnDatePicker();
-
 }
 
-function paypalIntegration() {
 
-    if($("#qty").val().length == 0 || $("#tot").val().length == 0|| $("#days").val().length == 0
-     || $("#price").val().length == 0 || $("#datepicker1").val().length == 0 || $("#datepicker1").val().length == 0 ){
-        $.notify("Payment Cannot Process. Please check the details","error");
-    }
-    else{
-        $.notify("You will be directed to payment page","success");
-        window.open(
-            'https://www.paypal.com',
-            '_blank' // <- This is what makes it open in a new window.
-          );
-       
-    }
-
-}
-
+//Checking whether user is already registered and if he/she registered redirect user to dashboard
 function checkBorrowerExists() {
     console.log("Function called");
     let data = {
@@ -171,7 +158,23 @@ function checkBorrowerExists() {
         })
 }
 
+function paypalIntegration() {
 
+    if($("#qty").val().length == 0 || $("#tot").val().length == 0|| $("#days").val().length == 0
+     || $("#price").val().length == 0 || $("#datepicker1").val().length == 0 || $("#datepicker1").val().length == 0 ){
+        $.notify("Payment Cannot Process. Please check the details","error");
+    }
+    else{
+        $.notify("You will be directed to payment page","success");
+        window.open(
+            'https://www.paypal.com',
+            '_blank' // <- This is what makes it open in a new window.
+          );
+       
+    }
+
+}
+//Inserting the registration details of the user to the database
 function getRegisterDetails() {
     let registerData = {
         firstName: document.getElementById('firstName').value,
@@ -191,7 +194,6 @@ function getRegisterDetails() {
     .then(response => {
         console.log(response);
         if(response.data.success){
-            // $.notify("Successfully Registered!","success");
             alert("Successfully Registered!");
             document.getElementById('firstName').value = "";
             document.getElementById('lastName').value = "";
@@ -202,7 +204,6 @@ function getRegisterDetails() {
            
         }else{
             $.notify("User Cannot be Registered!","warn");
-            // alert("User Not Registered!")
         }
     })
     .catch(error => {
@@ -211,7 +212,7 @@ function getRegisterDetails() {
 
 }
 
-
+//Validating user credentials
 function getUser() {
  console.log(localStorage.getItem(USER_INFO))
     let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
@@ -284,8 +285,6 @@ function loadBooksTable() {
     });
 }
 
-
-
 function getBookTable(tableId, book) {
         let html =
             '<table class="table table-bordered table-hover" id="'+ tableId +'">' +
@@ -320,7 +319,7 @@ function getBookTable(tableId, book) {
 
 
 
-    /***********  View Available Books For Rent ******************/
+/***********  View Available Books For Rent ******************/
 
 
 function loadAvailableBooksTable() {
@@ -336,8 +335,6 @@ function loadAvailableBooksTable() {
         console.log(err);
     });
 }
-
-
 
 function getAvailableBookTable(tableId, book) {
         let html =
@@ -395,54 +392,6 @@ function getAvailableBookTable(tableId, book) {
 	return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
 }
 
-function getImages() {
-        axios.get(baseUrlLocal+'/book/image/'+email)
-        .then(response => {
-            if (response.data.success) {
-                let form_details = response.data.data;
-                console.log(form_details[0]);
-                console.log(form_details[0].FirstName);
-                console.log(form_details.length);
-                $(document).ready(function () {
-                    
-                    var html = "<table  align='center' style='width:1068px' border='1|1' class='table-bordered table-hover'>";
-                    html+="<head>";
-                    html+="<tr>";
-                    html+="<td width='10%'align='center'> "+'<b>'+'First Name'+'</b>'+" </td>";
-                    html+="<td width='10%'align='center'> "+'<b>'+'Last Name'+'</b>'+" </td>";
-                    html+="<td width='30%'align='center'> "+'<b>'+'Address'+'</b>'+" </td>";
-                    html+="<td width='20%'align='center'> "+'<b>'+'License Number'+'</b>'+" </td>";
-                    html+="<td width='30%'align='center'> "+'<b>'+'Email'+'</b>'+" </td>";
-                    html+="</tr>";
-                    html+="</head>";
-    
-                    html+="<body>";
-                    html+="<td width='10%'align='center'> "+'<b>'+form_details[0].FirstName+'</b>'+" </td>";
-                    html+="<td width='10%'align='center'> "+'<b>'+form_details[0].LastName+'</b>'+" </td>";
-                    html+="<td width='30%'align='center'> "+'<b>'+form_details[0].Address+'</b>'+" </td>";
-                    html+="<td width='20%'align='center'> "+'<b>'+form_details[0].LicenseNumber+'</b>'+" </td>";
-                    html+="<td width='30%'align='center'> "+'<b>'+form_details[0].Email+'</b>'+" </td>";
-    
-                    html+="</body>";
-    
-                    html+="</table>";
-                    $("#user-data-table").html(html);
-                })
-                
-            }
-        })
-    
-        
-        .catch(function (error) {
-            if (error.response) {
-              console.log(error.response.data);
-              console.log(JSON.stringify(error));
-              console.log(error.response.headers);
-            }
-        });
-}
-
-
 // ********** Rent the book************
 
 function getBookDetails(){
@@ -471,8 +420,6 @@ function getBookDetails(){
 
         
 }
-
-
 
 // ********* Update with Rented Details*****************
 
@@ -532,6 +479,8 @@ function getBookDetailsForFinalRent(){
     }
     })
 }
+   
+//Triggering to any change in the ISBN
 $(document).ready(function() {   
 
         $(document).on("change", "#isbn", function() {
@@ -563,7 +512,7 @@ $(document).ready(function() {
                 console.log(error);
             });
         })
-        });
+});
 
 
 // ************ Updating returned books*******************
@@ -585,8 +534,10 @@ function updateFee() {
     axios.post(baseUrlLocal+'/register/info/returned/'+isbn,data, {headers: headers})
     .then(response => {
         if (response.data.success) {
-        alert(response.data);
         $.notify("Successfully Updated with the details", "success");
+        $("#returndate").val(''),
+        $("#additionaldate").val(''),
+        $("#latefee").val('')
     }
         })
         .catch(function (error) {
@@ -647,10 +598,9 @@ function insertEachUserRent() {
 
 }
 
-    /***********  View Available Books For Rent ******************/
+/***********  View Available Books For Rent ******************/
 
-
-    function loadRentedBooksTable() {
+function loadRentedBooksTable() {
         let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
         let email = userInfo.userData.Email;
         console.log(userInfo)
@@ -700,35 +650,47 @@ function insertEachUserRent() {
             html += '</tbody></table>'; 
         
             return html;
-        }
+}
     
-    // ************ Display Images****************
-    
-//     function loadImages() {
-//         let isbn=''
-//         let imgSource=''
-//         if (CURRENT_URL.includes('#')) {
-//              isbn = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
-//             console.log(isbn);
-//         }
+       
+// ******************* Add New Book***********************
 
-//         axios.get(baseUrlLocal + '/book/image/'+isbn)
-//         .then(response => {
-//             console.log(response.data)
-//         document.getElementById('imgSource')
-//         .setAttribute(
-//         'src', 'data:image/png;base64,' + btoa(unescape(encodeURIComponent(response)))
-//       );
+function addNewBook() {
+     
+    let data = {
+        ISBN : $("#isbn-b").val(),
+        BookName: $("#b-name").val(),
+        Author: $("#author-name").val(),
+        PricePerDay: $("#ppday").val(),
+        AvailableDate: null,
+        RentedBy: null,
+        Rented: 0,
+        Description: $("#desc").val()
+       
+    }
 
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         });
-      
+    console.log(data);
+
+    if(data.ISBN.length != 0||data.BookName.length != 0||data.Author.length != 0||data.PricePerDay.length != 0||data.Description.length != 0){
+    axios.post(baseUrlLocal+'/book',data, {headers: headers})
+    .then(response => {
+        if (response.data.success) {
+        $.notify("New Book is Added to your Library", "success");
+        $("#isbn-b").val(''),
+        $("#b-name").val(''),
+        $("#author-name").val(''),
+        $("#ppday").val(''),
+        $("#desc").val('')
+    }
+        })
+        .catch(function (error) {
+            $.notify("Please check all the details","warn");
+        });
+    }
+    else{
+        $.notify("Please check all the details","warn");
+    }
     
-      
-// }
-    
-      
+}
 
     

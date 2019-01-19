@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const rentForm = require('../models/rentModel');
 
-
+//Inserting rented books
 router.post('/:isbn', function(req, res) {
     let isbn = req.params.isbn;
     let allParamsPresent = true;
@@ -25,6 +25,8 @@ router.post('/:isbn', function(req, res) {
     res.send({ success: rentData.Email });
 });
 
+
+//Getting books rented by particular borrower
 router.get('/:email', function (req, res) {
     console.log(req.params.email)
     rentForm.rentModel.find({
@@ -51,9 +53,7 @@ router.get('/:email', function (req, res) {
     });
 });
 
-
-
-
+//Updating late fees after books is returned
 router.post('/book/:isbn', (req, res) => {
     var isbn = req.params.isbn;
     rentForm.rentModel.updateOne({ ISBN: isbn }, { 
@@ -62,7 +62,7 @@ router.post('/book/:isbn', (req, res) => {
     }, function(err, result){
         res.status(200).send({ success: true, message:"Updated"  });
     }
-);
+ );
 });
 
 

@@ -25,7 +25,7 @@
 <body class="fixed-nav">
 
     <!-- navbar: start -->
-     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="">Admin Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,6 @@
     </nav>
     <!-- navbar: end -->
 
-
     <div class="content-wrapper">
         <div class="container-fluid">
 
@@ -73,59 +72,51 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="text-center">Update Returned Book Details</h4>
+                        <h4 class="text-center">Add New Book to Library</h4>
                     </div>
                     <div class="card-body">
                         <form>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="name-student">ISBN</label>
-                                    <input type="text" class="form-control" id="isbn" placeholder="ISBN" required="required">
+                                    <input type="text" class="form-control" id="isbn-b" placeholder="ISBN" required="required">
                                 </div>
-                                <div class="form-group col-md-3">
-                                        <label for="name-student">Qty</label>
-                                        <input type="text" class="form-control" id="qty" placeholder="xxx" disabled>
+                                <div class="form-group col-md-6">
+                                        <label for="name-student">Book Name</label>
+                                        <input type="text" class="form-control" id="b-name" placeholder="Book Name" required="required">
                                     </div>
                             </div>
         
                             <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                            <label for="id-student">From Date: </label>
-                                            <input type="text" id="fromdate" disabled>
-                                        </div>
-                            <div class="form-group col-md-4">
-                                <label for="address-student">To Date: </label>
-                               <input type="text" id="todate" disabled>
-                            </div>
-                            <div class="form-group col-md-4">
-                                    <label for="home-phone-student">Returned Date: </label>
-                                    <input type="text" id="returndate">
+                                    <div class="form-group col-md-6">
+                                            <label for="">Author</label>
+                                            <input type="text" class="form-control" id="author-name" placeholder="Author" required="required">
+                                    </div>
+                            <div class="form-group col-md-6">
+                                <label for="inlineFormInputGroup">Price Per Day</label>
+                                <div class="input-group mb-2">
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                  </div>
+                                  <input type="number" class="form-control" id="ppday" placeholder="Price Per Day" min="0">
                                 </div>
+                            </div>
+                           
                         </div>
         
                             <div class="form-row">
-                              
-                                <div class="form-group col-md-3">
-                                    <label for="mobile-phone-student">Additional Days</label>
-                                        <input type="number" class="form-control" id="additionaldate" placeholder="xxxx" disabled>
-                                </div>
-                                <div class="form-group col-md-3">
-                                        <fieldset disabled>
-                                                <label for="inlineFormInputGroupUsername2">Late Fee</label>
-                                                <div class="input-group mb-2 mr-sm-2">
-                                                  <div class="input-group-prepend">
-                                                    <div class="input-group-text">$</div>
-                                                  </div>
-                                                  <input type="text" class="form-control" id="latefee" placeholder="xxx">
-                                                </div>
-                                                </fieldset>
+                                <div class="form-group col-md-12">
+                                    <label for="exampleFormControlTextarea1">Description</label>
+                                    <textarea class="form-control" id="desc" rows="5"></textarea>
                                 </div>
                             </div>
-        
-                                    <a id ="btn-rent-final" title="" class="btn btn-primary">
-                                            <span class="fa fa-book" aria-hidden="false"></span>
-                                           <span><strong>Update Rented Book</strong></span></a>
-                                     </a>
+                
+                        
+
+                                    <a id ="btn-add" title="" class="btn btn-primary">
+                                                    <span class="fas fa-plus-circle" aria-hidden="false"></span>
+                                                   <span><strong>Add Book</strong></span></a>
+                                             </a>
                         </form>
                         
                     </div>
