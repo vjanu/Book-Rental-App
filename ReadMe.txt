@@ -9,6 +9,14 @@ Initially 5 steps to start the project
 
 ----------------------------------------------------------------------------------------
 
+Mongo DB Setup
+--------------
+Address: ds155714.mlab.com
+Port: 55714
+Database Name: library
+Username: admin
+Password: admin123
+
 Functions
 ---------
 
