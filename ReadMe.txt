@@ -9,6 +9,14 @@ Initially 5 steps to start the project
 
 ----------------------------------------------------------------------------------------
 
+Mongo DB Setup
+--------------
+Address: ds155714.mlab.com
+Port: 55714
+Database Name: library
+Username: admin
+Password: admin123
+
 Functions
 ---------
 
@@ -28,6 +36,7 @@ User
 Admin
 =======
 1)Update the book details after book is returned
+2)Adding new book to the library
 
 PS: To login with the admin username is: admin@gmail.com   password is admin
 
