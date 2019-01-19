@@ -36,6 +36,7 @@ User
 Admin
 =======
 1)Update the book details after book is returned
+2)Adding new book to the library
 
 PS: To login with the admin username is: admin@gmail.com   password is admin
 
