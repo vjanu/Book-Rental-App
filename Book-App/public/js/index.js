@@ -294,6 +294,7 @@ function getBookTable(tableId, book) {
             '<th class="text-center" scope="col">Name of the Book</th>' +
             '<th class="text-center" scope="col">Author</th>' +
             '<th class="text-center" scope="col">Price Per Day</th>' +
+            '<th class="text-center" scope="col">Thumbnail</th>' +
             '<th class="text-center" scope="col">Status</th>' +
             '</tr>' +
             '</thead>' +
@@ -301,14 +302,18 @@ function getBookTable(tableId, book) {
     
         
             book.forEach(request => {
+               
             html +=
+            
                 '<tr>'+
                     '<td align="center">' + request.ISBN + '</td>' +
                     '<td align="center">' + request.BookName + '</td>' +
                     '<td align="center">' + request.Author + '</td>' +
                     '<td align="center">' + request.PricePerDay  + '</td>' +
+                    '<td align="center">'+ '<img id="thumb" style="width:80px;height:80px" src="./images/'+ request.ISBN +'.png"/>'  +'</td>' +
                     '<td align="center">' + isRented(request.Rented)  + '</td>' +
                 '</tr>';
+                
         });
     
         html += '</tbody></table>'; 
