@@ -50,7 +50,7 @@ Uploading image
 ---------------
 Go to add books page to add image to the book.
 Downloaded images should be having ISBN number of the book that you are adding.
-Go to that page click on the browse and browse the image that having same ISBN as the book that is going to add.
+Go to that page click on the browse and browse the image that having same ISBN as the book that is going to add.Click upload
 Before typing details of book, Please upload the image and then add the book to db.
 
 ------------------
