@@ -228,32 +228,7 @@ function getUser() {
             $('#last-name').html(form_details[0].LastName);
             $('#email').html(form_details[0].Email);
             $('#lno').html(form_details[0].LicenseNumber);
-            // $('#full-name').html(form_details[0].FirstName);
-            // $(document).ready(function () {
-                
-            //     var html = "<table  align='center' style='width:1068px' border='1|1' class='table-bordered table-hover'>";
-            //     html+="<head>";
-            //     html+="<tr>";
-            //     html+="<td width='10%'align='center'> "+'<b>'+'First Name'+'</b>'+" </td>";
-            //     html+="<td width='10%'align='center'> "+'<b>'+'Last Name'+'</b>'+" </td>";
-            //     html+="<td width='30%'align='center'> "+'<b>'+'Address'+'</b>'+" </td>";
-            //     html+="<td width='20%'align='center'> "+'<b>'+'License Number'+'</b>'+" </td>";
-            //     html+="<td width='30%'align='center'> "+'<b>'+'Email'+'</b>'+" </td>";
-            //     html+="</tr>";
-            //     html+="</head>";
-
-            //     html+="<body>";
-            //     html+="<td width='10%'align='center'> "+'<b>'+form_details[0].FirstName+'</b>'+" </td>";
-            //     html+="<td width='10%'align='center'> "+'<b>'+form_details[0].LastName+'</b>'+" </td>";
-            //     html+="<td width='30%'align='center'> "+'<b>'+form_details[0].Address+'</b>'+" </td>";
-            //     html+="<td width='20%'align='center'> "+'<b>'+form_details[0].LicenseNumber+'</b>'+" </td>";
-            //     html+="<td width='30%'align='center'> "+'<b>'+form_details[0].Email+'</b>'+" </td>";
-
-            //     html+="</body>";
-
-            //     html+="</table>";
-            //     $("#user-data-table").html(html);
-            // })
+           
             
         }
     })
@@ -271,115 +246,77 @@ function getUser() {
 
 /***********  View All the Books ******************/
 
-function loadBooksTable() {
+function loadBooksTable(){
+    let i=0;
     axios.get(baseUrlLocal + '/book/info')
-    .then(response => {
-        if (response.status == 200) {
-            console.log(response.data);
-            $('#view-all-books').append(getBookTable('books-table', response.data));
-            window.$('#books-table').DataTable();
+.then(function (response) {
+    console.log(response)
+    console.log(response.data)
+    html = ''
+    response.data.forEach(request => {
+        
+        if(i % 3 === 0 || i === 0){
+            html += '<tr style="width:25%">'
         }
-    })
-    .catch(err => {
-        console.log(err);
+        i=i+1;
+        html +='<td align="center">'+'<img id="thumb" style="width:150px;height:200px" src="./images/'+ request.ISBN +'.png"/>'+'</br>' ;
+        html +='<b>'+request.ISBN+'</b></br>' ;
+        html +='<b>'+request.BookName+'</b></br>' ;
+        html +='<b>'+request.Author+'</b></br>' ;
+
+        html +='<b>'+"$"+request.PricePerDay + '</b></br>';
+        html +=isRented(request.Rented) + '</br>';
+       '</td>' ;
+       if(i % 3 === 0 || i === 0){
+            html += '</tr>'
+        }
+    });
+    $('#view-all-books tbody').append(html);
+})
+    .catch(function (error) {
+        // handle error
+        console.log(error);
     });
 }
-
-function getBookTable(tableId, book) {
-        let html =
-            '<table class="table table-bordered table-hover" id="'+ tableId +'">' +
-            '<thead>' +
-            '<tr>' +
-            '<th class="text-center" scope="col">ISBN</th>' +
-            '<th class="text-center" scope="col">Name of the Book</th>' +
-            '<th class="text-center" scope="col">Author</th>' +
-            '<th class="text-center" scope="col">Price Per Day</th>' +
-            '<th class="text-center" scope="col">Thumbnail</th>' +
-            '<th class="text-center" scope="col">Status</th>' +
-            '</tr>' +
-            '</thead>' +
-            '<tbody>';  
-    
-        
-            book.forEach(request => {
-               
-            html +=
-            
-                '<tr>'+
-                    '<td align="center">' + request.ISBN + '</td>' +
-                    '<td align="center">' + request.BookName + '</td>' +
-                    '<td align="center">' + request.Author + '</td>' +
-                    '<td align="center">' + request.PricePerDay  + '</td>' +
-                    '<td align="center">'+ '<img id="thumb" style="width:80px;height:80px" src="./images/'+ request.ISBN +'.png"/>'  +'</td>' +
-                    '<td align="center">' + isRented(request.Rented)  + '</td>' +
-                '</tr>';
-                
-        });
-    
-        html += '</tbody></table>'; 
-    
-        return html;
-}
-
-
 
 
 /***********  View Available Books For Rent ******************/
 
 
 function loadAvailableBooksTable() {
+    let i=0;
     axios.get(baseUrlLocal + '/book/rent')
-    .then(response => {
-        if (response.status == 200) {
-            console.log(response.data);
-            $('#view-available-books').append(getAvailableBookTable('available-books-table', response.data));
-            window.$('#available-books-table').DataTable();
+ .then(function (response) {
+    console.log(response)
+    console.log(response.data)
+    html = ''
+    response.data.forEach(request => {
+        
+        if(i % 3 === 0 || i === 0){
+            html += '<tr style="width:25%">'
         }
-    })
-    .catch(err => {
-        console.log(err);
+        i=i+1;
+        html +='<td align="center">'+'<a href="book_details.html#'+request.ISBN+'"title="">'+'<img id="thumb" style="width:150px;height:200px" src="./images/'+ request.ISBN +'.png"/>'+'</a>'+'</br>' ;
+        html +='<b>'+request.ISBN+'</b></br>' ;
+        html +='<b>'+request.BookName+'</b></br>' ;
+        html +='<b>'+request.Author+'</b></br>' ;
+
+        html +='<b>'+"$"+request.PricePerDay + '</b></br>';
+       
+       '</td>' ;
+       if(i % 3 === 0 || i === 0){
+            html += '</tr>'
+        }
+    });
+    $('#view-available-books tbody').append(html);
+ })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
     });
 }
-
-function getAvailableBookTable(tableId, book) {
-        let html =
-            '<table class="table table-bordered table-hover" id="'+ tableId +'">' +
-            '<thead>' +
-            '<tr>' +
-            '<th class="text-center" scope="col">ISBN</th>' +
-            '<th class="text-center" scope="col">Name of the Book</th>' +
-            '<th class="text-center" scope="col">Author</th>' +
-            '<th class="text-center" scope="col">Price Per Day</th>' +
-            '<th class="text-center" scope="col">More Details</th>' +
-            '</tr>' +
-            '</thead>' +
-            '<tbody>';  
     
-        
-            book.forEach(request => {
-            html +=
-                '<tr>'+
-                    '<td align="center">' + request.ISBN + '</td>' +
-                    '<td align="center">' + request.BookName + '</td>' +
-                    '<td align="center">' + request.Author + '</td>' +
-                    '<td align="center">' + request.PricePerDay  + '</td>' +
-                    '<td align="center">' +
-                    '<a href="book_details.html#'+request.ISBN+'"title="" class="btn btn-primary btn-sm">\n' +
-                    '        <span class="far fa-check-square" aria-hidden="true"></span>\n' +
-                    '        <span><strong>View</strong></span></a>'+
-                     '</a>' +
-                    '</td>' ;
-                    
-                '</tr>';
-        });
-    
-        html += '</tbody></table>'; 
-    
-        return html;
-    }
-
-
-    function isRented(request) {
+function isRented(request) {
     var badgeClass = '';
     var badgeText = '';
 
@@ -540,9 +477,6 @@ function updateFee() {
     .then(response => {
         if (response.data.success) {
         $.notify("Successfully Updated with the details", "success");
-        // $("#returndate").val(''),
-        // $("#additionaldate").val(''),
-        // $("#latefee").val('')
     }
         })
         .catch(function (error) {
@@ -698,4 +632,17 @@ function addNewBook() {
     
 }
 
-    
+
+    $('#frmUploader').submit(function(){
+       
+        $.ajax({
+            url:'/book/api/Upload/',
+            type:'post',
+            data:$('#frmUploader').serialize(),
+            
+            success:function(){
+               
+
+            },
+        });
+    });

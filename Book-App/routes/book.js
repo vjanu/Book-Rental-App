@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bookForm = require('../models/bookModel');
 var fs = require('fs');
+var formidable = require('formidable');
+var multer = require('multer');
+
+
 
 //POST request to add a new book
 router.post('/', function(req, res) {
@@ -141,5 +145,32 @@ router.post('/:isbn', (req, res) => {
  );
 });
 
+
+var Storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, "../Book-App/public/images");
+    },
+    filename: function(req, file, callback) {
+        console.log("file:")
+        callback(null, file.originalname);
+    }
+});
+
+var upload = multer({
+    storage: Storage
+}).array("imgUploader", 3);
+
+router.get("/image", function(req, res) {
+    res.sendFile(__dirname + "/index.html");
+});
+router.post("/api/Upload/", function(req, res) {
+    var isbn = req.params.isbn
+    upload(req, res, function(err) {
+        if (err) {
+            return res.end("Something went wrong!"+ err);
+        }
+        res.send("<b>Image Uploaded Successfully</b><br/><a href='http://localhost:3000/add_books.html' class='btn btn-primary btn-sm'>Go Back</a>");
+    });
+});
 
 module.exports = router;

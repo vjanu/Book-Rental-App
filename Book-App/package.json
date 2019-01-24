@@ -13,10 +13,12 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "formidable": "^1.2.1",
     "fs": "0.0.1-security",
     "mocha": "^5.2.0",
     "mongoose": "^5.2.12",
     "morgan": "~1.9.0",
+    "multer": "^1.4.1",
     "nock": "^9.6.1",
     "randomatic": "^3.1.0",
     "request": "^2.88.0"
