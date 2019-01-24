@@ -43,3 +43,20 @@ PS: To login with the admin username is: admin@gmail.com   password is admin
 ----------------------------------------------------------------------------------------
 
 Note: To add a new book you can use add_book.html and for the image of that particular book, you should save a image inside the image folder with the ISBN of the book. Images should be in .png format.
+_____________________________________________________________________________________________________________________________________
+2019/01/24 Update
+
+Uploading image
+---------------
+Go to add books page to add image to the book.
+Downloaded images should be having ISBN number of the book that you are adding.
+Go to that page click on the browse and browse the image that having same ISBN as the book that is going to add.Click upload
+Before typing details of book, Please upload the image and then add the book to db.
+
+------------------
+All the books and available books are shown 3 books per row in the pages.
+Only available books can be clicked and see their details
+
+
+
+
